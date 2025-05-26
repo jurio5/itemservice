@@ -43,6 +43,9 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
     @Override
     public Item save(Item item) {
         String sql = "insert into item(item_name, price, quantity) values(:itemName, :price, :quantity)";
+        // 가장 간편한 방식 (자바빈 프로퍼티 규약을 사용)
+        // 그러나 트레이드 오프가 있음, 대리키(Surrogate key)로 생성되는 Id 부분은 생성해주지 않음
+        // 이런 경우에는 MapSqlParameterSource 를 사용하는게 상책
         SqlParameterSource param = new BeanPropertySqlParameterSource(item);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         template.update(sql, param, keyHolder);
@@ -60,7 +63,7 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
                 .addValue("itemName", updateParam.getItemName())
                 .addValue("price", updateParam.getPrice())
                 .addValue("quantity", updateParam.getQuantity())
-                .addValue("id", itemId);
+                .addValue("id", itemId); // 이 부분이 별도로 필요하다.
 
         template.update(sql, param);
     }
