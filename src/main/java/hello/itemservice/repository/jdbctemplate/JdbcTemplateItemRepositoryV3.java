@@ -36,7 +36,7 @@ public class JdbcTemplateItemRepositoryV3 implements ItemRepository {
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("item")
                 .usingGeneratedKeyColumns("id");
-//                .usingColumns("item_name", "price", "quantity"); // 생략 가능
+//                .usingColumns("item_name", "price", "quantity"); // 생략 가능 (특정 값만 저장하고 싶을 떄 유용)
     }
 
     @Override
