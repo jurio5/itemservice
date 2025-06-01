@@ -1,5 +1,6 @@
 package hello.itemservice.domain;
 
+import hello.itemservice.repository.ItemUpdateDto;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -26,5 +27,11 @@ public class Item {
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public void updateFromDto(ItemUpdateDto dto) {
+        this.itemName = dto.getItemName();
+        this.price = dto.getPrice();
+        this.quantity = dto.getQuantity();
     }
 }
